@@ -22,6 +22,16 @@
             padding: 10px;
             border-bottom: 1px solid #ddd;
             margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .urgency-selector {
+            margin-left: 10px;
+        }
+        .finished {
+            text-decoration: line-through;
+            color: grey;
         }
     </style>
 </head>
@@ -32,9 +42,53 @@
 
     <label for="urgency">Set urgency:</label>
     <select id="urgency">
+        <!-- Standard urgency levels -->
         <option value="😊">😊 Low</option>
         <option value="🕐">🕐 Moderate</option>
         <option value="🔥">🔥 Urgent</option>
+        
+        <!-- Specific types of urgency -->
+        <option value="🚨">🚨 Extremely Urgent</option>
+        <option value="🐢">🐢 Slow</option>
+        <option value="🚀">🚀 Top Priority</option>
+        <option value="☕">☕ Take Your Time</option>
+        
+        <!-- Work-related progress -->
+        <option value="🔨">🔨 In Progress</option>
+        <option value="⏳">⏳ Waiting</option>
+        <option value="💼">💼 Work in Progress</option>
+        <option value="🎯">🎯 Targeted</option>
+        <option value="📅">📅 Scheduled</option>
+        
+        <!-- Emotional status -->
+        <option value="💡">💡 Brainstorming</option>
+        <option value="💥">💥 Critical</option>
+        <option value="🍀">🍀 Luck-Based</option>
+        <option value="🌪️">🌪️ Chaotic</option>
+        <option value="💤">💤 Sleepy</option>
+        <option value="🌈">🌈 Optimistic</option>
+        <option value="😴">😴 Low Energy</option>
+        <option value="💪">💪 Motivated</option>
+        
+        <!-- Task completion progress -->
+        <option value="✅">✅ Done</option>
+        <option value="❌">❌ Canceled</option>
+        <option value="📝">📝 Under Review</option>
+        <option value="🔧">🔧 Being Fixed</option>
+        <option value="📢">📢 Needs Attention</option>
+        
+        <!-- Miscellaneous moods -->
+        <option value="⚡">⚡ Super Fast</option>
+        <option value="🏆">🏆 Winner</option>
+        <option value="🎉">🎉 Celebrating</option>
+        <option value="📌">📌 Pinned</option>
+        <option value="🍕">🍕 Break Time</option>
+        <option value="🎨">🎨 Creative Mode</option>
+        <option value="🎯">🎯 Focused</option>
+        
+        <!-- Add your own custom emojis here -->
+        <option value="🌸">🌸 Gentle</option>
+        <option value="🔥">🔥 On Fire</option>
     </select><br>
 
     <button onclick="addItem()">Add to Queue</button>
@@ -49,10 +103,35 @@
 
             var newItem = document.createElement('div');
             newItem.className = 'queue-item';
-            newItem.innerHTML = urgency + ' ' + itemText;
 
+            // Add item text and urgency
+            var itemContent = document.createElement('span');
+            itemContent.innerHTML = urgency + ' ' + itemText;
+            newItem.appendChild(itemContent);
+
+            // Add urgency selector for changing urgency
+            var urgencySelector = document.createElement('select');
+            urgencySelector.className = 'urgency-selector';
+            urgencySelector.innerHTML = document.getElementById('urgency').innerHTML; // Clone options
+            urgencySelector.value = urgency;
+            urgencySelector.onchange = function() {
+                itemContent.innerHTML = urgencySelector.value + ' ' + itemText;
+            };
+            newItem.appendChild(urgencySelector);
+
+            // Add 'Finished' button
+            var finishButton = document.createElement('button');
+            finishButton.innerHTML = 'Mark as Finished';
+            finishButton.onclick = function() {
+                itemContent.classList.toggle('finished');
+            };
+            newItem.appendChild(finishButton);
+
+            // Add item to queue
             document.getElementById('queue').appendChild(newItem);
-            document.getElementById('itemInput').value = ''; // Clear input after adding
+
+            // Clear input after adding
+            document.getElementById('itemInput').value = '';
         }
     </script>
 </body>

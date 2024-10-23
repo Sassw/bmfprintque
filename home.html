@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Queue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 50px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        textarea, select, button {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .queue-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Print Queue 📄</h1>
+
+    <textarea id="itemInput" rows="2" cols="40" placeholder="Add your item..."></textarea><br>
+
+    <label for="urgency">Set urgency:</label>
+    <select id="urgency">
+        <option value="😊">😊 Low</option>
+        <option value="🕐">🕐 Moderate</option>
+        <option value="🔥">🔥 Urgent</option>
+    </select><br>
+
+    <button onclick="addItem()">Add to Queue</button>
+
+    <div id="queue"></div>
+
+    <script>
+        function addItem() {
+            var itemText = document.getElementById('itemInput').value;
+            var urgency = document.getElementById('urgency').value;
+            if (itemText === '') return;
+
+            var newItem = document.createElement('div');
+            newItem.className = 'queue-item';
+            newItem.innerHTML = urgency + ' ' + itemText;
+
+            document.getElementById('queue').appendChild(newItem);
+            document.getElementById('itemInput').value = ''; // Clear input after adding
+        }
+    </script>
+</body>
+</html>
